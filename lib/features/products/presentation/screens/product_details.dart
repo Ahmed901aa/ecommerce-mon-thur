@@ -28,14 +28,14 @@ class ProductDetails extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: ImageIcon(
-              const AssetImage(IconsAssets.search),
+            icon: const ImageIcon(
+              AssetImage(IconsAssets.search),
               color: ColorManager.primary,
             ),
           ),
           IconButton(
             onPressed: () {},
-            icon: Icon(
+            icon: const Icon(
               Icons.shopping_cart_outlined,
               color: ColorManager.primary,
             ),
@@ -138,7 +138,7 @@ class ProductDetails extends StatelessWidget {
                     child: CustomElevatedButton(
                       label: 'Add to cart',
                       onTap: () {},
-                      prefixIcon: Icon(
+                      prefixIcon: const Icon(
                         Icons.add_shopping_cart_outlined,
                         color: ColorManager.white,
                       ),

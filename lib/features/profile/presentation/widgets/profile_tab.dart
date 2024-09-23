@@ -35,7 +35,7 @@ class ProfileTabState extends State<ProfileTab> {
               SvgPicture.asset(
                 SvgAssets.route,
                 height: Sizes.s40.h,
-                colorFilter: ColorFilter.mode(
+                colorFilter: const ColorFilter.mode(
                   ColorManager.primary,
                   BlendMode.srcIn,
                 ),

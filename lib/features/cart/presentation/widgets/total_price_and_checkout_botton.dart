@@ -50,7 +50,7 @@ class TotalPriceAndCheckoutButton extends StatelessWidget {
           child: CustomElevatedButton(
             label: 'Check Out',
             onTap: checkoutButtonOnTap,
-            suffixIcon: Icon(
+            suffixIcon: const Icon(
               Icons.arrow_forward,
               color: ColorManager.white,
             ),

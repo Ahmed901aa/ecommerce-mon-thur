@@ -5,7 +5,7 @@ import 'package:ecommerce/core/resources/styles_manager.dart';
 import 'package:ecommerce/core/resources/values_manager.dart';
 import 'package:ecommerce/core/routes/routes.dart';
 import 'package:ecommerce/core/widgets/product_counter.dart';
-import 'package:ecommerce/features/cart/widgets/color_and_size_cart_item.dart';
+import 'package:ecommerce/features/cart/presentation/widgets/color_and_size_cart_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

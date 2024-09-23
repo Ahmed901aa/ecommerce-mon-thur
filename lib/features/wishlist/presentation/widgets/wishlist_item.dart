@@ -43,12 +43,12 @@ class WishlistItem extends StatelessWidget {
                   height: Sizes.s135.h,
                   fit: BoxFit.cover,
                   imageUrl: product['imageUrl'],
-                  placeholder: (_, __) => Center(
+                  placeholder: (_, __) => const Center(
                     child: CircularProgressIndicator(
                       color: ColorManager.primary,
                     ),
                   ),
-                  errorWidget: (_, __, ___) => Icon(
+                  errorWidget: (_, __, ___) => const Icon(
                     Icons.error,
                     color: ColorManager.primary,
                   ),

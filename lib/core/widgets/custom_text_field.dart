@@ -125,7 +125,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                       splashRadius: Sizes.s1,
                       isSelected: !hidden,
                       color: widget.cursorColor,
-                      selectedIcon: const Icon(Icons.remove_red_eye_rounded),
+                      selectedIcon: const Icon(Icons.visibility),
                       icon: SvgPicture.asset(SvgAssets.visibilityOff),
                     )
                   : widget.suffixIcon,
@@ -150,7 +150,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 ),
                 child: Text(
                   errorText!,
-                  style: getMediumStyle(color: ColorManager.white)
+                  style: getMediumStyle(color: ColorManager.error)
                       .copyWith(fontSize: 18.sp),
                 ),
               ),

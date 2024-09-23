@@ -136,7 +136,7 @@ class ProductItem extends StatelessWidget {
                             child: Container(
                               height: height * 0.036,
                               width: width * 0.08,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: ColorManager.primary,
                               ),

@@ -2,8 +2,8 @@ import 'package:ecommerce/core/resources/assets_manager.dart';
 import 'package:ecommerce/core/resources/color_manager.dart';
 import 'package:ecommerce/core/resources/styles_manager.dart';
 import 'package:ecommerce/core/resources/values_manager.dart';
-import 'package:ecommerce/features/cart/widgets/cart_item.dart';
-import 'package:ecommerce/features/cart/widgets/total_price_and_checkout_botton.dart';
+import 'package:ecommerce/features/cart/presentation/widgets/cart_item.dart';
+import 'package:ecommerce/features/cart/presentation/widgets/total_price_and_checkout_botton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -22,8 +22,8 @@ class CartScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: ImageIcon(
-              const AssetImage(
+            icon: const ImageIcon(
+              AssetImage(
                 IconsAssets.search,
               ),
               color: ColorManager.primary,
@@ -31,8 +31,8 @@ class CartScreen extends StatelessWidget {
           ),
           IconButton(
             onPressed: () {},
-            icon: ImageIcon(
-              const AssetImage(IconsAssets.cart),
+            icon: const ImageIcon(
+              AssetImage(IconsAssets.cart),
               color: ColorManager.primary,
             ),
           ),

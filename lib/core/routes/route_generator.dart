@@ -1,7 +1,7 @@
 import 'package:ecommerce/core/routes/routes.dart';
 import 'package:ecommerce/features/auth/presentation/screens/login_screen.dart';
 import 'package:ecommerce/features/auth/presentation/screens/register_screen.dart';
-import 'package:ecommerce/features/cart/screens/cart_screen.dart';
+import 'package:ecommerce/features/cart/presentation/screens/cart_screen.dart';
 import 'package:ecommerce/features/home/presentation/screens/home_screen.dart';
 import 'package:ecommerce/features/products/presentation/screens/product_details.dart';
 import 'package:ecommerce/features/products/presentation/screens/products_screen.dart';

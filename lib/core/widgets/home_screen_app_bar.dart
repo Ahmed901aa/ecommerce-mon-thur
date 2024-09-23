@@ -43,41 +43,41 @@ class HomeScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ),
                     focusedErrorBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10000),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         width: Sizes.s1,
                         color: ColorManager.primary,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10000),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         width: Sizes.s1,
                         color: ColorManager.primary,
                       ),
                     ),
                     disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10000),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         width: Sizes.s1,
                         color: ColorManager.primary,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10000),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         width: Sizes.s1,
                         color: ColorManager.primary,
                       ),
                     ),
                     errorBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10000),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         width: Sizes.s1,
                         color: ColorManager.error,
                       ),
                     ),
-                    prefixIcon: ImageIcon(
-                      const AssetImage(IconsAssets.search),
+                    prefixIcon: const ImageIcon(
+                      AssetImage(IconsAssets.search),
                       color: ColorManager.primary,
                     ),
                     hintText: 'what do you search for?',
@@ -90,8 +90,8 @@ class HomeScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
               IconButton(
                 onPressed: () => Navigator.of(context).pushNamed(Routes.cart),
-                icon: ImageIcon(
-                  const AssetImage(IconsAssets.cart),
+                icon: const ImageIcon(
+                  AssetImage(IconsAssets.cart),
                   color: ColorManager.primary,
                 ),
               ),

@@ -158,7 +158,7 @@ class ProductCard extends StatelessWidget {
                         ),
                         InkWell(
                           onTap: () {},
-                          child: Icon(
+                          child: const Icon(
                             Icons.add_circle_rounded,
                             color: ColorManager.primary,
                             size: 36,
