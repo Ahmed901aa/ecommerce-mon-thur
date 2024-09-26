@@ -1,4 +1,4 @@
-import 'package:ecommerce/features/auth/data/models/user.dart';
+import 'package:ecommerce/features/auth/data/models/user_model.dart';
 
 class LoginResponse {
   final String message;
