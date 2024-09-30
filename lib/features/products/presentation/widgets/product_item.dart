@@ -1,38 +1,29 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce/core/resources/color_manager.dart';
 import 'package:ecommerce/core/resources/styles_manager.dart';
 import 'package:ecommerce/core/routes/routes.dart';
 import 'package:ecommerce/core/widgets/heart_button.dart';
+import 'package:ecommerce/features/products/domain/entities/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProductItem extends StatelessWidget {
-  final double width;
-  final double height;
-  final String image;
-  final String title;
-  final String description;
-  final double price;
-  final double discountPercentage;
-  final double rating;
+  const ProductItem(this.product);
 
-  const ProductItem({
-    required this.width,
-    required this.height,
-    required this.image,
-    required this.title,
-    required this.description,
-    required this.price,
-    required this.discountPercentage,
-    required this.rating,
-  });
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.sizeOf(context);
+
     return InkWell(
-      onTap: () => Navigator.of(context).pushNamed(Routes.productDetails),
+      onTap: () => Navigator.of(context).pushNamed(
+        Routes.productDetails,
+        arguments: product,
+      ),
       child: Container(
-        width: width * 0.4,
-        height: height * 0.3,
+        width: screenSize.width * 0.4,
+        height: screenSize.height * 0.3,
         decoration: BoxDecoration(
           border: Border.all(
             color: ColorManager.primary.withOpacity(0.3),
@@ -51,15 +42,15 @@ class ProductItem extends StatelessWidget {
                   ClipRRect(
                     borderRadius:
                         BorderRadius.vertical(top: Radius.circular(14.r)),
-                    child: Image.asset(
-                      image,
+                    child: CachedNetworkImage(
+                      imageUrl: product.imageCoverURL,
+                      width: screenSize.width,
                       fit: BoxFit.cover,
-                      width: width,
                     ),
                   ),
                   PositionedDirectional(
-                    top: height * 0.01,
-                    end: width * 0.02,
+                    top: screenSize.height * 0.01,
+                    end: screenSize.width * 0.02,
                     child: HeartButton(onTap: () {}),
                   ),
                 ],
@@ -73,36 +64,39 @@ class ProductItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      _truncateTitle(title),
+                      _truncateTitle(product.title),
                       style: getMediumStyle(
                         color: ColorManager.text,
                         fontSize: 14.sp,
                       ),
                     ),
-                    SizedBox(height: height * 0.002),
+                    SizedBox(height: screenSize.height * 0.002),
                     Text(
-                      _truncateDescription(description),
+                      _truncateDescription(product.description),
                       style: getRegularStyle(
                         color: ColorManager.text,
                         fontSize: 14.sp,
                       ),
                     ),
-                    SizedBox(height: height * 0.01),
+                    SizedBox(height: screenSize.height * 0.01),
                     SizedBox(
-                      width: width * 0.3,
+                      width: screenSize.width * 0.3,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'EGP $price',
+                            'EGP ${product.priceAfterDiscount ?? product.price}',
                             style: getRegularStyle(
                               color: ColorManager.text,
                               fontSize: 14.sp,
                             ),
                           ),
-                          Text(
-                            '$discountPercentage %',
-                            style: getTextWithLine(),
+                          Visibility(
+                            visible: product.priceAfterDiscount != null,
+                            child: Text(
+                              '${product.price}',
+                              style: getTextWithLine(),
+                            ),
                           ),
                         ],
                       ),
@@ -115,7 +109,7 @@ class ProductItem extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Review ($rating)',
+                                'Review (${product.ratingsAverage})',
                                 style: getRegularStyle(
                                   color: ColorManager.text,
                                   fontSize: 12.sp,
@@ -134,8 +128,8 @@ class ProductItem extends StatelessWidget {
                           child: InkWell(
                             onTap: () {},
                             child: Container(
-                              height: height * 0.036,
-                              width: width * 0.08,
+                              height: screenSize.height * 0.025,
+                              width: screenSize.width * 0.08,
                               decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: ColorManager.primary,

@@ -3,16 +3,23 @@ import 'package:ecommerce/core/resources/styles_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ProductCounter extends StatelessWidget {
-  final int counter;
-  final void Function(int) onAddClicked;
-  final void Function(int) onRemoveClicked;
+class ProductCounter extends StatefulWidget {
+  final int initialValue;
+  final void Function(int) onIncrement;
+  final void Function(int) onDecrement;
 
   const ProductCounter({
-    required this.onAddClicked,
-    required this.onRemoveClicked,
-    required this.counter,
+    required this.onIncrement,
+    required this.onDecrement,
+    required this.initialValue,
   });
+
+  @override
+  State<ProductCounter> createState() => _ProductCounterState();
+}
+
+class _ProductCounterState extends State<ProductCounter> {
+  late int _counter = widget.initialValue;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +33,9 @@ class ProductCounter extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              onRemoveClicked(counter);
+              if (_counter == 1) return;
+              setState(() => _counter--);
+              widget.onDecrement(_counter);
             },
             child: Icon(
               Icons.remove_circle_outline,
@@ -38,7 +47,7 @@ class ProductCounter extends StatelessWidget {
             width: 18.w,
           ),
           Text(
-            '$counter',
+            '$_counter',
             style: getMediumStyle(color: ColorManager.white)
                 .copyWith(fontSize: 18.sp),
           ),
@@ -47,7 +56,8 @@ class ProductCounter extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              onAddClicked(counter);
+              setState(() => _counter++);
+              widget.onIncrement(_counter);
             },
             child: Icon(
               Icons.add_circle_outline,

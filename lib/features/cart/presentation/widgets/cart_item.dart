@@ -119,9 +119,9 @@ class CartItem extends StatelessWidget {
                           ),
                         ),
                         ProductCounter(
-                          onAddClicked: onIncrementTap,
-                          counter: quantity,
-                          onRemoveClicked: onDecrementTap,
+                          onIncrement: onIncrementTap,
+                          initialValue: quantity,
+                          onDecrement: onDecrementTap,
                         ),
                       ],
                     ),

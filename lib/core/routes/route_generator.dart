@@ -17,9 +17,15 @@ class RouteGenerator {
       case Routes.home:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
       case Routes.products:
-        return MaterialPageRoute(builder: (_) => const ProductsScreen());
+        return MaterialPageRoute(
+          builder: (_) => const ProductsScreen(),
+          settings: settings,
+        );
       case Routes.productDetails:
-        return MaterialPageRoute(builder: (_) => const ProductDetails());
+        return MaterialPageRoute(
+          builder: (_) => const ProductDetails(),
+          settings: settings,
+        );
       case Routes.cart:
         return MaterialPageRoute(builder: (_) => const CartScreen());
       default:
