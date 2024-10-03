@@ -30,17 +30,53 @@ class CartAPIRemoteDataSource implements CartRemoteDataSource {
   }
 
   @override
-  Future<CartResponse> getCart() {
-    throw UnimplementedError();
+  Future<CartResponse> getCart() async {
+    try {
+      final response = await _dio.get(
+        APIConstants.cartEndpoint,
+      );
+      return CartResponse.fromJson(response.data);
+    } catch (exception) {
+      String? message;
+      if (exception is DioException) {
+        message = exception.response?.data['message'];
+      }
+      throw RemoteException(message ?? 'Failed to get cart');
+    }
   }
 
   @override
-  Future<CartResponse> updateCart(String productId, int quantity) {
-    throw UnimplementedError();
+  Future<CartResponse> updateCart(String productId, int quantity) async {
+    try {
+      final response = await _dio.put(
+        '${APIConstants.cartEndpoint}/$productId',
+        data: {
+          'count': quantity,
+        },
+      );
+      return CartResponse.fromJson(response.data);
+    } catch (exception) {
+      String? message;
+      if (exception is DioException) {
+        message = exception.response?.data['message'];
+      }
+      throw RemoteException(message ?? 'Failed to update cart');
+    }
   }
 
   @override
-  Future<CartResponse> deleteFromCart(String productId) {
-    throw UnimplementedError();
+  Future<CartResponse> deleteFromCart(String productId) async {
+    try {
+      final response = await _dio.delete(
+        '${APIConstants.cartEndpoint}/$productId',
+      );
+      return CartResponse.fromJson(response.data);
+    } catch (exception) {
+      String? message;
+      if (exception is DioException) {
+        message = exception.response?.data['message'];
+      }
+      throw RemoteException(message ?? 'Failed to delete product from cart');
+    }
   }
 }

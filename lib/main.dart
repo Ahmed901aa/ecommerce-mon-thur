@@ -5,6 +5,7 @@ import 'package:ecommerce/core/di/service_locator.dart';
 import 'package:ecommerce/core/routes/route_generator.dart';
 import 'package:ecommerce/core/routes/routes.dart';
 import 'package:ecommerce/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:ecommerce/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,8 +22,15 @@ class ECommerceApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => serviceLocator.get<AuthCubit>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => serviceLocator.get<AuthCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => serviceLocator.get<CartCubit>(),
+        ),
+      ],
       child: ScreenUtilInit(
         designSize: const Size(430, 932),
         minTextAdapt: true,
