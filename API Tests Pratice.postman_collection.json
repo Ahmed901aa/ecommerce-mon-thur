@@ -1,0 +1,377 @@
+{
+	"info": {
+		"_postman_id": "b31bddb3-4a40-4a2c-9a6f-cfdeb06e0503",
+		"name": "API Tests Pratice",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "48076309",
+		"_collection_link": "https://www.postman.com/api-testing-4053/workspace/api-testing/collection/1334981-b31bddb3-4a40-4a2c-9a6f-cfdeb06e0503?action=share&source=collection_link&creator=48076309"
+	},
+	"item": [
+		{
+			"name": "GetPosts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURLTest}}/posts",
+					"host": [
+						"{{baseURLTest}}"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetWithParamenterQuery",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response has one user using ID 1\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    // pm.expect(jsonData[0].userId).to.eql(1);",
+							"    pm.expect(jsonData[0].id).to.eql(1);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURLTest}}/posts?id=1",
+					"host": [
+						"{{baseURLTest}}"
+					],
+					"path": [
+						"posts"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateNewElement",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status is 201', function (){",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test('Check new ID', function() {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.id).to.eql(101);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\": 5,\n    \"id\": 5,\n    \"title\": \"Novo teste\",\n    \"body\": \"quia eto\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}",
+					"host": [
+						"{{URL}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPost2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"UserID is in the body\", function () {",
+							"    let jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property(\"userId\");",
+							"});",
+							"",
+							"pm.test('Title is in the body', function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('title');",
+							"});",
+							"",
+							"pm.test(\"Post ID is 1\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.id).to.eql(1);",
+							"});",
+							"",
+							"pm.test(\"Response time\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Resposta está em formato JSON\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts/1",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CheckAllFields",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Check if id is correct', function() {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('id', 1);",
+							"});",
+							"",
+							"pm.test('Check if title is correct', function() {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.title).to.eql('Post Atualizado');",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": 1,\n  \"title\": \"Post Atualizado\",\n  \"body\": \"Atualizado com sucesso\",\n  \"userId\": 1\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts/1",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NewField",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\": 5,\n    \"id\": 5,\n    \"title\": \"Novo teste Novo teste\",\n    \"body\": \"quia eto\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts/1",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeletePost",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/1",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GerUsers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Retorna 10 usuários\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    let jsonData = pm.response.json();",
+							"    pm.expect(jsonData.length).to.eql(10);",
+							"});",
+							"",
+							"pm.test('Check JSON response', function () {",
+							"    pm.response.to.have.header('Content-Type');",
+							"    pm.expect(pm.response.headers.get('Content-type')).to.include('application/json')",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/users",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURLTest",
+			"value": "https://jsonplaceholder.typicode.com",
+			"type": "default"
+		},
+		{
+			"key": "URL",
+			"value": "https://jsonplaceholder.typicode.com/posts",
+			"type": "default"
+		}
+	]
+}

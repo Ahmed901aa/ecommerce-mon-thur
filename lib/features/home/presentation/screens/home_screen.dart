@@ -34,9 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
           topStart: Radius.circular(15),
           topEnd: Radius.circular(15),
         ),
-        child: SizedBox(
-          height: MediaQuery.sizeOf(context).height * 0.1,
-          child: BottomNavigationBar(
+        child: BottomNavigationBar(
             currentIndex: currentIndex,
             onTap: (value) => changeSelectedIndex(value),
             backgroundColor: ColorManager.primary,
@@ -52,7 +50,6 @@ class _HomeScreenState extends State<HomeScreen> {
               CustomBottomNavBarItem(IconsAssets.profile, 'Profile'),
             ],
           ),
-        ),
       ),
     );
   }
