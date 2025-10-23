@@ -1,4 +1,4 @@
-import 'package:ecommerce/core/routes/route_generator.dart';
+ import 'package:ecommerce/core/routes/route_generator.dart';
 import 'package:ecommerce/core/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
