@@ -16,6 +16,6 @@ class RegisterRequest {
         "email": email,
         "password": password,
         "rePassword": password,
-      "phone": phoneNumber,
-    };
-  }
+        "phone": phoneNumber,
+      };
+}

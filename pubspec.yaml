@@ -20,6 +20,9 @@ dependencies:
   flutter_native_splash: ^2.4.1
   readmore: ^3.0.0
   smooth_page_indicator: ^1.2.0+3
+  dio: ^5.9.0
+  shared_preferences: ^2.5.3
+  flutter_bloc: ^9.1.1
 
 dev_dependencies:
   flutter_lints: ^4.0.0

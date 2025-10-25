@@ -7,7 +7,10 @@ import 'package:ecommerce/core/routes/routes.dart';
 import 'package:ecommerce/core/utils/validator.dart';
 import 'package:ecommerce/core/widgets/custom_elevated_button.dart';
 import 'package:ecommerce/core/widgets/custom_text_field.dart';
+import 'package:ecommerce/features/auth/presentation/auth_cubit.dart';
+import 'package:ecommerce/features/auth/screens/data/models/login_requst.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -95,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Center(
                   child: SizedBox(
                     child: CustomElevatedButton(
-                      label: 'Login',
+                      label: 'sgin In',
                       backgroundColor: ColorManager.white,
                       isStadiumBorder: false,
                       textStyle: getBoldStyle(
@@ -103,7 +106,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontSize: FontSize.s18,
                       ),
                       onTap: () {
-                        Navigator.of(context).pushReplacementNamed(Routes.home);
+                        BlocProvider.of<AuthCubit>(context).login(
+                          LoginRequest(
+                            username: _emailController.text,
+                            password: _passwordController.text,
+                          ),
+                        );
                       },
                     ),
                   ),
@@ -115,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Don’t have an account?',
+                      'Don\'t have an account?',
                       style: getSemiBoldStyle(color: ColorManager.white)
                           .copyWith(fontSize: FontSize.s16),
                     ),
@@ -139,12 +147,5 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
   }
 }

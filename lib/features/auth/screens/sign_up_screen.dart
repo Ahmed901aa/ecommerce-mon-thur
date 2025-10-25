@@ -3,11 +3,13 @@ import 'package:ecommerce/core/resources/color_manager.dart';
 import 'package:ecommerce/core/resources/font_manager.dart';
 import 'package:ecommerce/core/resources/styles_manager.dart';
 import 'package:ecommerce/core/resources/values_manager.dart';
-import 'package:ecommerce/core/routes/routes.dart';
 import 'package:ecommerce/core/utils/validator.dart';
 import 'package:ecommerce/core/widgets/custom_elevated_button.dart';
 import 'package:ecommerce/core/widgets/custom_text_field.dart';
+import 'package:ecommerce/features/auth/presentation/auth_cubit.dart';
+import 'package:ecommerce/features/auth/screens/data/models/register_requst.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -19,10 +21,10 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final _nameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _phoneController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final phoneController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   label: 'Full Name',
                   textInputType: TextInputType.name,
                   validation: Validator.validateFullName,
-                  controller: _nameController,
+                  controller: nameController,
                 ),
                 SizedBox(
                   height: Sizes.s18.h,
@@ -59,7 +61,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   label: 'Mobile Number',
                   validation: Validator.validatePhoneNumber,
                   textInputType: TextInputType.phone,
-                  controller: _phoneController,
+                  controller: phoneController,
                 ),
                 SizedBox(
                   height: Sizes.s18.h,
@@ -70,7 +72,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   label: 'E-mail address',
                   validation: Validator.validateEmail,
                   textInputType: TextInputType.emailAddress,
-                  controller: _emailController,
+                  controller: emailController,
                 ),
                 SizedBox(
                   height: Sizes.s18.h,
@@ -82,7 +84,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   validation: Validator.validatePassword,
                   isObscured: true,
                   textInputType: TextInputType.text,
-                  controller: _passwordController,
+                  controller: passwordController,
                 ),
                 SizedBox(
                   height: Sizes.s50.h,
@@ -92,7 +94,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: Sizes.s60.h,
                     width: MediaQuery.sizeOf(context).width * .9,
                     child: CustomElevatedButton(
-                      label: 'Register',
+                      label: 'Sign Up',
                       backgroundColor: ColorManager.white,
                       isStadiumBorder: false,
                       textStyle: getBoldStyle(
@@ -100,35 +102,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         fontSize: FontSize.s20,
                       ),
                       onTap: () {
-                        Navigator.of(context).pushReplacementNamed(Routes.home);
+                        BlocProvider.of<AuthCubit>(context).register(
+                          RegisterRequest(
+                            username: nameController.text,
+                            email: emailController.text,
+                            phoneNumber: phoneController.text,
+                            password: passwordController.text,
+                          ), 
+                          
+                         
+                         
+                        );
                       },
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 30.h,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Already have an account?',
-                      style: getSemiBoldStyle(color: ColorManager.white)
-                          .copyWith(fontSize: FontSize.s16),
-                    ),
-                    SizedBox(
-                      width: Sizes.s8.w,
-                    ),
-                    GestureDetector(
-                      onTap: () => Navigator.of(context)
-                          .pushReplacementNamed(Routes.login),
-                      child: Text(
-                        'Login',
-                        style: getSemiBoldStyle(color: ColorManager.white)
-                            .copyWith(fontSize: FontSize.s16),
-                      ),
-                    ),
-                  ],
                 ),
               ],
             ),
@@ -138,12 +125,5 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _emailController.dispose();
-    _phoneController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
+ 
 }
