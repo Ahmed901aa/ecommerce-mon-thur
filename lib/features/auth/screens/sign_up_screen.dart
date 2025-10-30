@@ -147,6 +147,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                   ),
+                  SizedBox(height: Sizes.s20.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Already have an account?',
+                        style: getSemiBoldStyle(color: ColorManager.white)
+                            .copyWith(fontSize: FontSize.s16),
+                      ),
+                      SizedBox(width: Sizes.s8.w),
+                      GestureDetector(
+                        onTap: () => Navigator.of(context)
+                            .pushReplacementNamed(Routes.login),
+                        child: Text(
+                          'Sign in',
+                          style: getSemiBoldStyle(color: ColorManager.white)
+                              .copyWith(fontSize: FontSize.s16),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),

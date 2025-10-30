@@ -1,3 +1,4 @@
+import 'package:ecommerce/core/app_bloc_abserver.dart';
 import 'package:ecommerce/core/routes/route_generator.dart';
 import 'package:ecommerce/core/routes/routes.dart';
 import 'package:ecommerce/features/auth/presentation/auth_cubit.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
+  Bloc.observer = AppBlocAbserver();
   runApp(const ECommerceApp());
 }
 

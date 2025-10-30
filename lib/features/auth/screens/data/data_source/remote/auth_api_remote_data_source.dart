@@ -12,9 +12,8 @@ class AuthApiRemoteDataSource extends AuthRemoteDataSource {
       : _dio = Dio(
           BaseOptions(
             baseUrl: ApiConstants.baseUrl,
-            headers: const {
-              'Content-Type': 'application/json',
-            },
+            receiveDataWhenStatusError: true,
+           
           ),
         );
 
@@ -29,13 +28,15 @@ class AuthApiRemoteDataSource extends AuthRemoteDataSource {
       );
 
       return LoginResponse.fromJson(response.data);
-    } on DioException catch (e) {
-      final resp = e.response?.data;
-      final message = resp is Map && resp['message'] != null
-          ? resp['message'].toString()
-          : 'Login failed';
-      throw ApiException(message, details: resp ?? e.message);
+    } catch  (exception) {
+        String? massage;
+      if(exception is DioException){
+      
+        massage = exception.response!.data['message']; 
+      }
+       throw RemoteExcption(massage ?? ' Failed to register' );
     }
+   
   }
 
   @override
@@ -47,12 +48,13 @@ class AuthApiRemoteDataSource extends AuthRemoteDataSource {
       );
 
       return RegisterResponse.fromJson(response.data);
-    } on DioException catch (e) {
-      final resp = e.response?.data;
-      final message = resp is Map && resp['message'] != null
-          ? resp['message'].toString()
-          : 'Registration failed';
-      throw ApiException(message, details: resp ?? e.message);
+    } catch  (exception) {
+      String? massage;
+      if(exception is DioException){
+        massage = exception.response!.data['message'];
+      }
+      
+      throw ApiException(massage ?? ' Failed to login' );
     }
   }
 }

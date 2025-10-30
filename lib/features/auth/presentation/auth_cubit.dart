@@ -1,5 +1,3 @@
-import 'package:dio/dio.dart';
-import 'package:ecommerce/core/errors/api_exception.dart';
 import 'package:ecommerce/features/auth/presentation/auth_state.dart';
 import 'package:ecommerce/features/auth/screens/data/data_source/local/auth_sherd_data_source.dart';
 import 'package:ecommerce/features/auth/screens/data/data_source/remote/auth_api_remote_data_source.dart';
@@ -17,25 +15,13 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  Future<void> register(
-    RegisterRequest request,
-  ) async {
+  Future<void> register(RegisterRequest request) async {
     emit(RegisterLoading());
     try {
       await authRepository.register(request);
       emit(RegisterSuccess());
-    } on ApiException catch (e) {
-      final msg = e.details != null ? '${e.message}\n\nDetails: ${e.details}' : e.message;
-      emit(RegisterFailure(message: msg));
-    } on DioException catch (e) {
-      final resp = e.response?.data;
-      String message = resp is Map && resp['message'] != null
-          ? resp['message'].toString()
-          : 'An unknown error occurred';
-      if (resp != null) message = '$message\n\nDetails: ${resp.toString()}';
-      emit(RegisterFailure(message: message));
     } catch (error) {
-      String message = error.toString();
+      var message = error.toString();
       if (message.startsWith('Exception: ')) {
         message = message.substring('Exception: '.length);
       }
@@ -48,18 +34,8 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       await authRepository.login(request);
       emit(LoginSuccess());
-    } on ApiException catch (e) {
-      final msg = e.details != null ? '${e.message}\n\nDetails: ${e.details}' : e.message;
-      emit(LoginFailure(message: msg));
-    } on DioException catch (e) {
-      final resp = e.response?.data;
-      String message = resp is Map && resp['message'] != null
-          ? resp['message'].toString()
-          : 'An unknown error occurred';
-      if (resp != null) message = '$message\n\nDetails: ${resp.toString()}';
-      emit(LoginFailure(message: message));
     } catch (error) {
-      String message = error.toString();
+      var message = error.toString();
       if (message.startsWith('Exception: ')) {
         message = message.substring('Exception: '.length);
       }

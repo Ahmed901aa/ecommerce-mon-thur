@@ -17,12 +17,12 @@ class Validator {
   }
 
   static String? validatePassword(String? val) {
-    final RegExp passwordRegex = RegExp(r'^(?=.*[a-zA-Z])(?=.*[0-9])');
+    
     if (val == null) {
       return 'this field is required';
     } else if (val.isEmpty) {
       return 'this field is required';
-    } else if (val.length < 8 || !passwordRegex.hasMatch(val)) {
+    } else if (val.length < 8 ) {
       return 'strong password please';
     } else {
       return null;

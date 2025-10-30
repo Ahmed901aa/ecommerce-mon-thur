@@ -150,7 +150,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 ),
                 child: Text(
                   errorText!,
-                  style: getMediumStyle(color: ColorManager.white)
+                  style: getMediumStyle(color: ColorManager.error)
                       .copyWith(fontSize: 18.sp),
                 ),
               ),

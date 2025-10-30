@@ -1,12 +1,15 @@
 class ApiException implements Exception {
   final String message;
-  final dynamic details;
+ 
 
-  ApiException(this.message, {this.details});
+ const ApiException(this.message);
 
-  @override
-  String toString() {
-    if (details == null) return message;
-    return '$message\nDetails: ${details.toString()}';
-  }
+  
 }
+class RemoteExcption extends ApiException{
+   const RemoteExcption(super.message);
+  }
+
+  class localExcption extends ApiException{
+    const localExcption(super.message);
+  }
