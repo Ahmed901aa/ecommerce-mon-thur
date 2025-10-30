@@ -126,8 +126,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             if (formkey.currentState!.validate()) {
                               BlocProvider.of<AuthCubit>(context).login(
                                 LoginRequest(
-                                  email: _emailController.text.trim(),
-                                  password: _passwordController.text.trim(),
+                                  email: _emailController.text,
+                                  password: _passwordController.text,
                                 ),
                               );
                             }
