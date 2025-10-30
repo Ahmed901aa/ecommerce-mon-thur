@@ -23,7 +23,11 @@ class AuthCubit extends Cubit<AuthState> {
       await authRepository.register(request);
       emit(RegisterSuccess());
     } catch (error) {
-      emit(RegisterFailure(message: error.toString()));
+      String message = error.toString();
+      if (message.startsWith('Exception: ')) {
+        message = message.substring('Exception: '.length);
+      }
+      emit(RegisterFailure(message: message));
     }
   }
 
@@ -33,7 +37,11 @@ class AuthCubit extends Cubit<AuthState> {
       await authRepository.login(request);
       emit(LoginSuccess());
     } catch (error) {
-       emit(LoginFailure(message: error.toString()));
+       String message = error.toString();
+       if (message.startsWith('Exception: ')) {
+         message = message.substring('Exception: '.length);
+       }
+       emit(LoginFailure(message: message));
     }
   }
 }

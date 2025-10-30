@@ -3,6 +3,7 @@ import 'package:ecommerce/core/resources/color_manager.dart';
 import 'package:ecommerce/core/resources/font_manager.dart';
 import 'package:ecommerce/core/resources/styles_manager.dart';
 import 'package:ecommerce/core/resources/values_manager.dart';
+import 'package:ecommerce/core/routes/routes.dart';
 import 'package:ecommerce/core/utils/ui_utils.dart';
 import 'package:ecommerce/core/utils/validator.dart';
 import 'package:ecommerce/core/widgets/custom_elevated_button.dart';
@@ -28,6 +29,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
   final formkey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    phoneController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,6 +114,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             UiUtils.showLoading(context);
                           } else if (state is RegisterSuccess) {
                             UiUtils.hideLoading(context);
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                              Routes.home,
+                              (route) => false,
+                            );
                           } else if (state is RegisterFailure) {
                             UiUtils.hideLoading(context);
                             UiUtils.showSnackBar(context, state.message ?? 'Registration failed');
@@ -121,10 +135,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             if (formkey.currentState!.validate() == true) {
                               BlocProvider.of<AuthCubit>(context).register(
                                 RegisterRequest(
-                                  username: nameController.text,
-                                  email: emailController.text,
-                                  phoneNumber: phoneController.text,
-                                  password: passwordController.text,
+                                  name: nameController.text.trim(),
+                                  email: emailController.text.trim(),
+                                  phoneNumber: phoneController.text.trim(),
+                                  password: passwordController.text.trim(),
                                 ),
                               );
                             }

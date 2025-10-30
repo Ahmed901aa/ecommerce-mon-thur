@@ -108,6 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             UiUtils.showLoading(context);
                           } else if (state is LoginSuccess) {
                             UiUtils.hideLoading(context);
+                            Navigator.of(context).pushReplacementNamed(Routes.home);
                           } else if (state is LoginFailure) {
                             UiUtils.hideLoading(context);
                             UiUtils.showSnackBar(context, state.message ?? 'Login failed');
@@ -125,8 +126,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             if (formkey.currentState!.validate()) {
                               BlocProvider.of<AuthCubit>(context).login(
                                 LoginRequest(
-                                  username: _emailController.text,
-                                  password: _passwordController.text,
+                                  email: _emailController.text.trim(),
+                                  password: _passwordController.text.trim(),
                                 ),
                               );
                             }
