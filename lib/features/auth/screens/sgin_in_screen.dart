@@ -27,6 +27,30 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final formkey = GlobalKey<FormState>();
+  String? _authErrorMessage;
+
+  void _setAuthError(String? message) {
+    if (!mounted) return;
+
+    if (message == null) {
+      setState(() => _authErrorMessage = null);
+      return;
+    }
+
+    final trimmedMessage = message.trim();
+
+    setState(() {
+      _authErrorMessage =
+          trimmedMessage.isEmpty ? 'Incorrect email or password' : trimmedMessage;
+    });
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +108,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: Sizes.s8.h,
                   ),
+                  SizedBox(
+                    height: Sizes.s16.h,
+                  ),
                   Row(
                     children: [
                       const Spacer(),
@@ -105,33 +132,61 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: BlocListener<AuthCubit, AuthState>(
                         listener: (context, state) {
                           if (state is LoginLoading) {
+                            _setAuthError(null);
                             UiUtils.showLoading(context);
                           } else if (state is LoginSuccess) {
                             UiUtils.hideLoading(context);
+                            _setAuthError(null);
                             Navigator.of(context).pushReplacementNamed(Routes.home);
                           } else if (state is LoginFailure) {
                             UiUtils.hideLoading(context);
-                            UiUtils.showSnackBar(context, state.message ?? 'Login failed');
+                            final rawMessage = state.message ?? '';
+                            final errorMessage = rawMessage.trim().isEmpty
+                                ? 'Incorrect email or password'
+                                : rawMessage.trim();
+
+                            _setAuthError(errorMessage);
                           }
                         },
-                        child: CustomElevatedButton(
-                          label: 'sgin In',
-                          backgroundColor: ColorManager.white,
-                          isStadiumBorder: false,
-                          textStyle: getBoldStyle(
-                            color: ColorManager.primary,
-                            fontSize: FontSize.s18,
-                          ),
-                          onTap: () {
-                            if (formkey.currentState!.validate()) {
-                              BlocProvider.of<AuthCubit>(context).login(
-                                LoginRequest(
-                                  email: _emailController.text,
-                                  password: _passwordController.text,
-                                ),
-                              );
-                            }
-                          },
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CustomElevatedButton(
+                              label: 'sgin In',
+                              backgroundColor: ColorManager.white,
+                              isStadiumBorder: false,
+                              textStyle: getBoldStyle(
+                                color: ColorManager.primary,
+                                fontSize: FontSize.s18,
+                              ),
+                              onTap: () {
+                                if (formkey.currentState!.validate()) {
+                                  BlocProvider.of<AuthCubit>(context).login(
+                                    LoginRequest(
+                                      email: _emailController.text,
+                                      password: _passwordController.text,
+                                    ),
+                                  );
+                                }
+                              },
+                            ),
+                            AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 200),
+                              child: _authErrorMessage == null
+                                  ? const SizedBox.shrink()
+                                  : Padding(
+                                      key: const ValueKey('login-error-text'),
+                                      padding: EdgeInsets.only(top: Sizes.s12.h),
+                                      child: Text(
+                                        _authErrorMessage!,
+                                        style: getMediumStyle(
+                                          color: ColorManager.white,
+                                        ).copyWith(fontSize: FontSize.s16),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                            ),
+                          ],
                         ),
                       ),
                     ),

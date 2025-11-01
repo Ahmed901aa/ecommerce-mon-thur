@@ -1,3 +1,4 @@
+import 'package:ecommerce/core/errors/api_exception.dart';
 import 'package:ecommerce/features/auth/presentation/auth_state.dart';
 import 'package:ecommerce/features/auth/screens/data/data_source/local/auth_sherd_data_source.dart';
 import 'package:ecommerce/features/auth/screens/data/data_source/remote/auth_api_remote_data_source.dart';
@@ -21,11 +22,7 @@ class AuthCubit extends Cubit<AuthState> {
       await authRepository.register(request);
       emit(RegisterSuccess());
     } catch (error) {
-      var message = error.toString();
-      if (message.startsWith('Exception: ')) {
-        message = message.substring('Exception: '.length);
-      }
-      emit(RegisterFailure(message: message));
+      emit(RegisterFailure(message: _mapErrorToMessage(error)));
     }
   }
 
@@ -35,11 +32,15 @@ class AuthCubit extends Cubit<AuthState> {
       await authRepository.login(request);
       emit(LoginSuccess());
     } catch (error) {
-      var message = error.toString();
-      if (message.startsWith('Exception: ')) {
-        message = message.substring('Exception: '.length);
-      }
-      emit(LoginFailure(message: message));
+      emit(LoginFailure(message: _mapErrorToMessage(error)));
     }
+  }
+
+  String _mapErrorToMessage(Object error) {
+    if (error is ApiException) {
+      return error.message;
+    }
+
+    return 'Something went wrong. Please try again.';
   }
 }
