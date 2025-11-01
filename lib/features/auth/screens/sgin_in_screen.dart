@@ -27,6 +27,26 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final formkey = GlobalKey<FormState>();
+  String? _authErrorMessage;
+
+  void _setAuthError(String? message) {
+    if (!mounted) return;
+
+    final trimmedMessage = message?.trim();
+
+    setState(() {
+      _authErrorMessage = (trimmedMessage == null || trimmedMessage.isEmpty)
+          ? null
+          : trimmedMessage;
+    });
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +104,41 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: Sizes.s8.h,
                   ),
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 250),
+                    child: _authErrorMessage == null
+                        ? const SizedBox.shrink()
+                        : Container(
+                            key: const ValueKey('login-error-banner'),
+                            padding: EdgeInsets.all(Insets.s12.sp),
+                            decoration: BoxDecoration(
+                              color: ColorManager.white,
+                              borderRadius: BorderRadius.circular(Sizes.s8),
+                              border: Border.all(color: ColorManager.error),
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Icon(
+                                  Icons.error_outline,
+                                  color: ColorManager.error,
+                                  size: Sizes.s24.sp,
+                                ),
+                                SizedBox(width: Sizes.s12.w),
+                                Expanded(
+                                  child: Text(
+                                    _authErrorMessage!,
+                                    style: getMediumStyle(color: ColorManager.error)
+                                        .copyWith(fontSize: FontSize.s16),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                  ),
+                  SizedBox(
+                    height: Sizes.s16.h,
+                  ),
                   Row(
                     children: [
                       const Spacer(),
@@ -105,13 +160,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: BlocListener<AuthCubit, AuthState>(
                         listener: (context, state) {
                           if (state is LoginLoading) {
+                            _setAuthError(null);
                             UiUtils.showLoading(context);
                           } else if (state is LoginSuccess) {
                             UiUtils.hideLoading(context);
+                            _setAuthError(null);
                             Navigator.of(context).pushReplacementNamed(Routes.home);
                           } else if (state is LoginFailure) {
                             UiUtils.hideLoading(context);
-                            UiUtils.showSnackBar(context, state.message ?? 'Login failed');
+                            _setAuthError(
+                              state.message ?? 'Incorrect email or password',
+                            );
                           }
                         },
                         child: CustomElevatedButton(
