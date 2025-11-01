@@ -28,15 +28,30 @@ class AuthApiRemoteDataSource extends AuthRemoteDataSource {
       );
 
       return LoginResponse.fromJson(response.data);
-    } catch  (exception) {
-        String? massage;
-      if(exception is DioException){
-      
-        massage = exception.response!.data['message']; 
+    } on DioException catch (exception) {
+      final response = exception.response;
+      final statusCode = response?.statusCode;
+      final data = response?.data;
+
+      String? message;
+
+      if (data is Map<String, dynamic>) {
+        final value = data['message'];
+        if (value is String && value.trim().isNotEmpty) {
+          message = value.trim();
+        }
+      } else if (data is String && data.trim().isNotEmpty) {
+        message = data.trim();
       }
-       throw RemoteExcption(massage ?? ' Failed to register' );
+
+      if (statusCode == 401 || statusCode == 403) {
+        message = 'Incorrect email or password';
+      }
+
+      throw RemoteExcption(message ?? 'Failed to login');
+    } catch (_) {
+      throw const RemoteExcption('Failed to login');
     }
-   
   }
 
   @override
@@ -48,13 +63,22 @@ class AuthApiRemoteDataSource extends AuthRemoteDataSource {
       );
 
       return RegisterResponse.fromJson(response.data);
-    } catch  (exception) {
-      String? massage;
-      if(exception is DioException){
-        massage = exception.response!.data['message'];
+    } on DioException catch (exception) {
+      final data = exception.response?.data;
+      String? message;
+
+      if (data is Map<String, dynamic>) {
+        final value = data['message'];
+        if (value is String && value.trim().isNotEmpty) {
+          message = value.trim();
+        }
+      } else if (data is String && data.trim().isNotEmpty) {
+        message = data.trim();
       }
-      
-      throw ApiException(massage ?? ' Failed to login' );
+
+      throw ApiException(message ?? 'Failed to register');
+    } catch (_) {
+      throw const ApiException('Failed to register');
     }
   }
 }
