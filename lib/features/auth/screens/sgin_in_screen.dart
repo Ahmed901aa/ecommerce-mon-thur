@@ -32,12 +32,10 @@ class _LoginScreenState extends State<LoginScreen> {
   void _setAuthError(String? message) {
     if (!mounted) return;
 
-    final trimmedMessage = message?.trim();
-
     setState(() {
-      _authErrorMessage = (trimmedMessage == null || trimmedMessage.isEmpty)
+      _authErrorMessage = (message == null || message.trim().isEmpty)
           ? null
-          : trimmedMessage;
+          : 'Incorrect email or password';
     });
   }
 
@@ -105,34 +103,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: Sizes.s8.h,
                   ),
                   AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 250),
+                    duration: const Duration(milliseconds: 200),
                     child: _authErrorMessage == null
                         ? const SizedBox.shrink()
-                        : Container(
-                            key: const ValueKey('login-error-banner'),
-                            padding: EdgeInsets.all(Insets.s12.sp),
-                            decoration: BoxDecoration(
-                              color: ColorManager.white,
-                              borderRadius: BorderRadius.circular(Sizes.s8),
-                              border: Border.all(color: ColorManager.error),
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Icon(
-                                  Icons.error_outline,
-                                  color: ColorManager.error,
-                                  size: Sizes.s24.sp,
-                                ),
-                                SizedBox(width: Sizes.s12.w),
-                                Expanded(
-                                  child: Text(
-                                    _authErrorMessage!,
-                                    style: getMediumStyle(color: ColorManager.error)
-                                        .copyWith(fontSize: FontSize.s16),
-                                  ),
-                                ),
-                              ],
+                        : Padding(
+                            key: const ValueKey('login-error-text'),
+                            padding: EdgeInsets.only(top: Insets.s4.h),
+                            child: Text(
+                              _authErrorMessage!,
+                              style: getMediumStyle(color: ColorManager.error)
+                                  .copyWith(fontSize: FontSize.s16),
                             ),
                           ),
                   ),
