@@ -108,20 +108,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: Sizes.s8.h,
                   ),
-                  AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 200),
-                    child: _authErrorMessage == null
-                        ? const SizedBox.shrink()
-                        : Padding(
-                            key: const ValueKey('login-error-text'),
-                            padding: EdgeInsets.only(top: Insets.s4.h),
-                            child: Text(
-                              _authErrorMessage!,
-                              style: getMediumStyle(color: ColorManager.error)
-                                  .copyWith(fontSize: FontSize.s16),
-                            ),
-                          ),
-                  ),
                   SizedBox(
                     height: Sizes.s16.h,
                   ),
@@ -160,27 +146,47 @@ class _LoginScreenState extends State<LoginScreen> {
                                 : rawMessage.trim();
 
                             _setAuthError(errorMessage);
-                            UiUtils.showSnackBar(context, errorMessage);
                           }
                         },
-                        child: CustomElevatedButton(
-                          label: 'sgin In',
-                          backgroundColor: ColorManager.white,
-                          isStadiumBorder: false,
-                          textStyle: getBoldStyle(
-                            color: ColorManager.primary,
-                            fontSize: FontSize.s18,
-                          ),
-                          onTap: () {
-                            if (formkey.currentState!.validate()) {
-                              BlocProvider.of<AuthCubit>(context).login(
-                                LoginRequest(
-                                  email: _emailController.text,
-                                  password: _passwordController.text,
-                                ),
-                              );
-                            }
-                          },
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CustomElevatedButton(
+                              label: 'sgin In',
+                              backgroundColor: ColorManager.white,
+                              isStadiumBorder: false,
+                              textStyle: getBoldStyle(
+                                color: ColorManager.primary,
+                                fontSize: FontSize.s18,
+                              ),
+                              onTap: () {
+                                if (formkey.currentState!.validate()) {
+                                  BlocProvider.of<AuthCubit>(context).login(
+                                    LoginRequest(
+                                      email: _emailController.text,
+                                      password: _passwordController.text,
+                                    ),
+                                  );
+                                }
+                              },
+                            ),
+                            AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 200),
+                              child: _authErrorMessage == null
+                                  ? const SizedBox.shrink()
+                                  : Padding(
+                                      key: const ValueKey('login-error-text'),
+                                      padding: EdgeInsets.only(top: Sizes.s12.h),
+                                      child: Text(
+                                        _authErrorMessage!,
+                                        style: getMediumStyle(
+                                          color: ColorManager.white,
+                                        ).copyWith(fontSize: FontSize.s16),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
