@@ -32,10 +32,16 @@ class _LoginScreenState extends State<LoginScreen> {
   void _setAuthError(String? message) {
     if (!mounted) return;
 
+    if (message == null) {
+      setState(() => _authErrorMessage = null);
+      return;
+    }
+
+    final trimmedMessage = message.trim();
+
     setState(() {
-      _authErrorMessage = (message == null || message.trim().isEmpty)
-          ? null
-          : 'Incorrect email or password';
+      _authErrorMessage =
+          trimmedMessage.isEmpty ? 'Incorrect email or password' : trimmedMessage;
     });
   }
 
@@ -148,9 +154,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             Navigator.of(context).pushReplacementNamed(Routes.home);
                           } else if (state is LoginFailure) {
                             UiUtils.hideLoading(context);
-                            _setAuthError(
-                              state.message ?? 'Incorrect email or password',
-                            );
+                            final rawMessage = state.message ?? '';
+                            final errorMessage = rawMessage.trim().isEmpty
+                                ? 'Incorrect email or password'
+                                : rawMessage.trim();
+
+                            _setAuthError(errorMessage);
+                            UiUtils.showSnackBar(context, errorMessage);
                           }
                         },
                         child: CustomElevatedButton(

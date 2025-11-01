@@ -44,7 +44,7 @@ class AuthApiRemoteDataSource extends AuthRemoteDataSource {
         message = data.trim();
       }
 
-      if (statusCode == 401 || statusCode == 403) {
+      if (statusCode == 400 || statusCode == 401 || statusCode == 403) {
         message = 'Incorrect email or password';
       }
 
