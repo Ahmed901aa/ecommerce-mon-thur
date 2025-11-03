@@ -7,39 +7,31 @@ import 'package:ecommerce/features/auth/screens/data/repositories/auth_repositor
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  late final AuthRepository authRepository;
-  AuthCubit() : super(AuthInitial()) {
+ late final AuthRepository authRepository; 
+  AuthCubit() : super(AuthInitial()){
     authRepository = AuthRepository(
-      AuthApiRemoteDataSource(),
+       AuthApiRemoteDataSource(),
       AuthSharedDataSource(),
     );
   }
 
-  Future<void> register(RegisterRequest request) async {
+  
+
+  Future<void> register(RegisterRequest request,) async {
     emit(RegisterLoading());
-    try {
-      await authRepository.register(request);
-      emit(RegisterSuccess());
-    } catch (error) {
-      var message = error.toString();
-      if (message.startsWith('Exception: ')) {
-        message = message.substring('Exception: '.length);
-      }
-      emit(RegisterFailure(message: message));
-    }
+    final result = await authRepository.register(request);
+    result.fold(
+      (failure) => emit(RegisterFailure(message: failure.massage)),
+      (user) => emit(RegisterSuccess()),
+    );
   }
 
   Future<void> login(LoginRequest request) async {
     emit(LoginLoading());
-    try {
-      await authRepository.login(request);
-      emit(LoginSuccess());
-    } catch (error) {
-      var message = error.toString();
-      if (message.startsWith('Exception: ')) {
-        message = message.substring('Exception: '.length);
-      }
-      emit(LoginFailure(message: message));
-    }
+    final result = await authRepository.login(request);
+    result.fold(
+      (failure) => emit(LoginFailure(message: failure.massage)),
+      (user) => emit(LoginSuccess()),
+    );
   }
 }

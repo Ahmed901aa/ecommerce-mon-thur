@@ -5,12 +5,14 @@ import 'package:ecommerce/core/resources/styles_manager.dart';
 import 'package:ecommerce/core/resources/values_manager.dart';
 import 'package:ecommerce/core/routes/routes.dart';
 import 'package:ecommerce/core/utils/ui_utils.dart';
+import 'package:ecommerce/core/utils/credentials_storage.dart';
 import 'package:ecommerce/core/utils/validator.dart';
 import 'package:ecommerce/core/widgets/custom_elevated_button.dart';
 import 'package:ecommerce/core/widgets/custom_text_field.dart';
 import 'package:ecommerce/features/auth/presentation/auth_cubit.dart';
 import 'package:ecommerce/features/auth/presentation/auth_state.dart';
 import 'package:ecommerce/features/auth/screens/data/models/login_requst.dart';
+import 'package:ecommerce/features/auth/screens/mixins/login_screen_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,10 +25,25 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+class _LoginScreenState extends State<LoginScreen> with LoginScreenMixin {
+  @override
+  late final emailController = TextEditingController();
+  @override
+  late final passwordController = TextEditingController();
+  
   final formkey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    initLoginScreen();
+  }
+
+  @override
+  void dispose() {
+    disposeLoginScreen();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     label: 'Email',
                     textInputType: TextInputType.emailAddress,
                     validation: Validator.validateEmail,
-                    controller: _emailController,
+                    controller: emailController,
                   ),
                   SizedBox(
                     height: Sizes.s28.h,
@@ -79,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     validation: Validator.validatePassword,
                     isObscured: true,
                     textInputType: TextInputType.text,
-                    controller: _passwordController,
+                    controller: passwordController,
                   ),
                   SizedBox(
                     height: Sizes.s8.h,
@@ -106,12 +123,19 @@ class _LoginScreenState extends State<LoginScreen> {
                         listener: (context, state) {
                           if (state is LoginLoading) {
                             UiUtils.showLoading(context);
+                            setAuthError(null);
                           } else if (state is LoginSuccess) {
                             UiUtils.hideLoading(context);
+                            setAuthError(null);
+                            // Save credentials for next time (consider secure storage for passwords)
+                            CredentialsStorage.saveCredentials(
+                              emailController.text,
+                              passwordController.text,
+                            );
                             Navigator.of(context).pushReplacementNamed(Routes.home);
                           } else if (state is LoginFailure) {
                             UiUtils.hideLoading(context);
-                            UiUtils.showSnackBar(context, state.message ?? 'Login failed');
+                            setAuthError(state.message);
                           }
                         },
                         child: CustomElevatedButton(
@@ -126,8 +150,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             if (formkey.currentState!.validate()) {
                               BlocProvider.of<AuthCubit>(context).login(
                                 LoginRequest(
-                                  email: _emailController.text,
-                                  password: _passwordController.text,
+                                  email: emailController.text,
+                                  password: passwordController.text,
                                 ),
                               );
                             }
@@ -161,6 +185,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ],
                   ),
+                  SizedBox(height: 10.h),
+                  if (authError != null)
+                    Center(
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 8.h),
+                        decoration: BoxDecoration(
+                          color: Colors.black87,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          authError!,
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),

@@ -4,7 +4,10 @@ import 'package:ecommerce/core/resources/font_manager.dart';
 import 'package:ecommerce/core/resources/styles_manager.dart';
 import 'package:ecommerce/core/resources/values_manager.dart';
 import 'package:ecommerce/core/routes/routes.dart';
+import 'dart:async';
+
 import 'package:ecommerce/core/utils/ui_utils.dart';
+import 'package:ecommerce/core/utils/credentials_storage.dart';
 import 'package:ecommerce/core/utils/validator.dart';
 import 'package:ecommerce/core/widgets/custom_elevated_button.dart';
 import 'package:ecommerce/core/widgets/custom_text_field.dart';
@@ -29,6 +32,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
   final formkey = GlobalKey<FormState>();
+  String? _authError;
+  Timer? _errorTimer;
 
   @override
   void dispose() {
@@ -36,7 +41,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
     emailController.dispose();
     phoneController.dispose();
     passwordController.dispose();
+    _errorTimer?.cancel();
     super.dispose();
+  }
+
+  void _setAuthError(String? message) {
+    _errorTimer?.cancel();
+    if (message == null) {
+      setState(() => _authError = null);
+      return;
+    }
+    setState(() => _authError = message);
+    _errorTimer = Timer(const Duration(seconds: 10), () {
+      if (mounted) setState(() => _authError = null);
+    });
   }
 
   @override
@@ -112,15 +130,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         listener: (context, state) {
                           if (state is RegisterLoading) {
                             UiUtils.showLoading(context);
+                            _setAuthError(null);
                           } else if (state is RegisterSuccess) {
                             UiUtils.hideLoading(context);
-                            Navigator.of(context).pushNamedAndRemoveUntil(
-                              Routes.home,
-                              (route) => false,
+                            _setAuthError(null);
+                            // Save credentials so user can sign in faster next time
+                            CredentialsStorage.saveCredentials(
+                              emailController.text,
+                              passwordController.text,
                             );
+                            Navigator.of(context).pushReplacementNamed(Routes.home);
                           } else if (state is RegisterFailure) {
                             UiUtils.hideLoading(context);
-                            UiUtils.showSnackBar(context, state.message ?? 'Registration failed');
+                            _setAuthError(state.message);
                           }
                         },
                         child: CustomElevatedButton(
@@ -135,10 +157,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             if (formkey.currentState!.validate() == true) {
                               BlocProvider.of<AuthCubit>(context).register(
                                 RegisterRequest(
-                                  name: nameController.text.trim(),
-                                  email: emailController.text.trim(),
-                                  phoneNumber: phoneController.text.trim(),
-                                  password: passwordController.text.trim(),
+                                  name: nameController.text,
+                                  email: emailController.text,
+                                  phoneNumber: phoneController.text,
+                                  password: passwordController.text,
                                 ),
                               );
                             }
@@ -147,27 +169,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: Sizes.s20.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Already have an account?',
-                        style: getSemiBoldStyle(color: ColorManager.white)
-                            .copyWith(fontSize: FontSize.s16),
-                      ),
-                      SizedBox(width: Sizes.s8.w),
-                      GestureDetector(
-                        onTap: () => Navigator.of(context)
-                            .pushReplacementNamed(Routes.login),
+                  SizedBox(height: 10.h),
+                  if (_authError != null)
+                    Center(
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 8.h),
+                        decoration: BoxDecoration(
+                          color: Colors.black87,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                         child: Text(
-                          'Sign in',
-                          style: getSemiBoldStyle(color: ColorManager.white)
-                              .copyWith(fontSize: FontSize.s16),
+                          _authError!,
+                          style: const TextStyle(color: Colors.white),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
                 ],
               ),
             ),

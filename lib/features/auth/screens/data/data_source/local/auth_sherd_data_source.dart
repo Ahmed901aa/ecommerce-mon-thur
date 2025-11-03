@@ -9,7 +9,7 @@ class AuthSharedDataSource extends AuthLocalDataSource {
   Future<void> saveToken(String token) async {
     try{ final prefs = await SharedPreferences.getInstance();
     await prefs.setString(CachConstants.tokenKey, token);}
-    catch (exception){
+    catch (_ ){
       throw const localExcption('Failed to save token');
 
 
@@ -20,7 +20,7 @@ class AuthSharedDataSource extends AuthLocalDataSource {
   Future<String?> getToken() async {
    try { final prefs = await SharedPreferences.getInstance();
     return prefs.getString(CachConstants.tokenKey);} 
-    catch(exception){
+    catch(_){
       throw const localExcption('Faleid to get tokn');
     }
   }
