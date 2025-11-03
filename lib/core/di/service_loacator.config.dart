@@ -1,4 +1,3 @@
-
 import 'package:ecommerce/features/auth/presentation/auth_cubit.dart' as _i317;
 import 'package:ecommerce/features/auth/screens/data/data_source/local/auth_local_data_source.dart'
     as _i60;
@@ -14,7 +13,6 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
 extension GetItInjectableX on _i174.GetIt {
-
   _i174.GetIt init({
     String? environment,
     _i526.EnvironmentFilter? environmentFilter,

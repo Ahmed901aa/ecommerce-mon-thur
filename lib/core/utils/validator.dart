@@ -17,7 +17,6 @@ class Validator {
   }
 
   static String? validatePassword(String? val) {
-    
     if (val == null) {
       return 'this field is required';
     } else if (val.isEmpty) {

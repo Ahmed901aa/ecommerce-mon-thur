@@ -8,7 +8,6 @@ import 'package:ecommerce/features/auth/screens/data/models/register_requst.dart
 import 'package:ecommerce/features/auth/screens/data/models/user_model.dart';
 import 'package:injectable/injectable.dart';
 
-
 @singleton
 class AuthRepository {
   final AuthRemoteDataSource _remoteDataSource;
@@ -18,7 +17,7 @@ class AuthRepository {
     this._localDataSource,
   );
 
-  Future<Either<Failure , UserModel>> register(RegisterRequest request) async {
+  Future<Either<Failure, UserModel>> register(RegisterRequest request) async {
     try {
       final response = await _remoteDataSource.register(request);
       await _localDataSource.saveToken(response.token);
@@ -30,7 +29,7 @@ class AuthRepository {
     }
   }
 
-  Future<Either<Failure , UserModel>> login(LoginRequest request) async {
+  Future<Either<Failure, UserModel>> login(LoginRequest request) async {
     try {
       final response = await _remoteDataSource.login(request);
       await _localDataSource.saveToken(response.token);

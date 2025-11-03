@@ -15,7 +15,6 @@ class AuthApiRemoteDataSource extends AuthRemoteDataSource {
           BaseOptions(
             baseUrl: ApiConstants.baseUrl,
             receiveDataWhenStatusError: true,
-           
           ),
         );
 
@@ -30,15 +29,13 @@ class AuthApiRemoteDataSource extends AuthRemoteDataSource {
       );
 
       return LoginResponse.fromJson(response.data);
-    } catch  (exception) {
-        String? massage;
-      if(exception is DioException){
-      
-        massage = exception.response!.data['message']; 
+    } catch (exception) {
+      String? massage;
+      if (exception is DioException) {
+        massage = exception.response!.data['message'];
       }
-       throw RemoteExcption(massage ?? ' Failed to register' );
+      throw RemoteExcption(massage ?? ' Failed to register');
     }
-   
   }
 
   @override
@@ -50,13 +47,13 @@ class AuthApiRemoteDataSource extends AuthRemoteDataSource {
       );
 
       return RegisterResponse.fromJson(response.data);
-    } catch  (exception) {
+    } catch (exception) {
       String? massage;
-      if(exception is DioException){
+      if (exception is DioException) {
         massage = exception.response!.data['message'];
       }
-      
-      throw ApiException(massage ?? ' Failed to login' );
+
+      throw ApiException(massage ?? ' Failed to login');
     }
   }
 }

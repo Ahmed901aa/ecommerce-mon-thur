@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class UiUtils {
   UiUtils._();
 
@@ -22,8 +21,10 @@ class UiUtils {
                 ),
                 const SizedBox(width: 16),
                 Expanded(
-                  child: Text(message ?? 'Please wait...',
-                      style: Theme.of(ctx).textTheme.bodyMedium,),
+                  child: Text(
+                    message ?? 'Please wait...',
+                    style: Theme.of(ctx).textTheme.bodyMedium,
+                  ),
                 ),
               ],
             ),

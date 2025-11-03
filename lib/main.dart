@@ -18,7 +18,6 @@ class ECommerceApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => AuthCubit(),
-
       child: ScreenUtilInit(
         designSize: const Size(430, 932),
         minTextAdapt: true,

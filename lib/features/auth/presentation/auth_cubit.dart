@@ -9,17 +9,17 @@ import 'package:injectable/injectable.dart';
 
 @singleton
 class AuthCubit extends Cubit<AuthState> {
- late final AuthRepository authRepository; 
-  AuthCubit() : super(AuthInitial()){
+  late final AuthRepository authRepository;
+  AuthCubit() : super(AuthInitial()) {
     authRepository = AuthRepository(
-       AuthApiRemoteDataSource(),
+      AuthApiRemoteDataSource(),
       AuthSharedDataSource(),
     );
   }
 
-  
-
-  Future<void> register(RegisterRequest request,) async {
+  Future<void> register(
+    RegisterRequest request,
+  ) async {
     emit(RegisterLoading());
     final result = await authRepository.register(request);
     result.fold(

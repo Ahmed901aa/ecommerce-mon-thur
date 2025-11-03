@@ -4,7 +4,6 @@ class CredentialsStorage {
   static const _emailKey = 'saved_email';
   static const _passwordKey = 'saved_password';
 
-  
   static Future<void> saveCredentials(String email, String password) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_emailKey, email);
