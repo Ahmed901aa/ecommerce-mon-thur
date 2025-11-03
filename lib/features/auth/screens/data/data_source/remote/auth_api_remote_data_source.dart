@@ -10,15 +10,9 @@ import 'package:injectable/injectable.dart';
 
 @Singleton(as: AuthRemoteDataSource)
 class AuthApiRemoteDataSource extends AuthRemoteDataSource {
-  AuthApiRemoteDataSource()
-      : _dio = Dio(
-          BaseOptions(
-            baseUrl: ApiConstants.baseUrl,
-            receiveDataWhenStatusError: true,
-          ),
-        );
-
   final Dio _dio;
+
+  AuthApiRemoteDataSource(this._dio);
 
   @override
   Future<LoginResponse> login(LoginRequest loginRequest) async {

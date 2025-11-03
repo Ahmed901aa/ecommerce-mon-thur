@@ -1,6 +1,4 @@
 import 'package:ecommerce/features/auth/presentation/auth_state.dart';
-import 'package:ecommerce/features/auth/screens/data/data_source/local/auth_sherd_data_source.dart';
-import 'package:ecommerce/features/auth/screens/data/data_source/remote/auth_api_remote_data_source.dart';
 import 'package:ecommerce/features/auth/screens/data/models/login_requst.dart';
 import 'package:ecommerce/features/auth/screens/data/models/register_requst.dart';
 import 'package:ecommerce/features/auth/screens/data/repositories/auth_repository.dart';
@@ -9,13 +7,8 @@ import 'package:injectable/injectable.dart';
 
 @singleton
 class AuthCubit extends Cubit<AuthState> {
-  late final AuthRepository authRepository;
-  AuthCubit() : super(AuthInitial()) {
-    authRepository = AuthRepository(
-      AuthApiRemoteDataSource(),
-      AuthSharedDataSource(),
-    );
-  }
+   final AuthRepository authRepository;
+  AuthCubit(this.authRepository) : super(AuthInitial());
 
   Future<void> register(
     RegisterRequest request,

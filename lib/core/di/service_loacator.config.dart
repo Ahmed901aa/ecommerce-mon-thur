@@ -1,35 +1,31 @@
-import 'package:ecommerce/features/auth/presentation/auth_cubit.dart' as _i317;
-import 'package:ecommerce/features/auth/screens/data/data_source/local/auth_local_data_source.dart'
-    as _i60;
-import 'package:ecommerce/features/auth/screens/data/data_source/local/auth_sherd_data_source.dart'
-    as _i168;
-import 'package:ecommerce/features/auth/screens/data/data_source/remote/auth_api_remote_data_source.dart'
-    as _i781;
-import 'package:ecommerce/features/auth/screens/data/data_source/remote/auth_remote_data_source.dart'
-    as _i969;
-import 'package:ecommerce/features/auth/screens/data/repositories/auth_repository.dart'
-    as _i1048;
-import 'package:get_it/get_it.dart' as _i174;
-import 'package:injectable/injectable.dart' as _i526;
+part of 'service_loacator.dart';
 
-extension GetItInjectableX on _i174.GetIt {
-  _i174.GetIt init({
+extension GetItInjectableX on GetIt {
+  GetIt init({
     String? environment,
-    _i526.EnvironmentFilter? environmentFilter,
+    EnvironmentFilter? environmentFilter,
   }) {
-    final gh = _i526.GetItHelper(
+    final gh = GetItHelper(
       this,
       environment,
       environmentFilter,
     );
-    gh.singleton<_i317.AuthCubit>(() => _i317.AuthCubit());
-    gh.singleton<_i60.AuthLocalDataSource>(() => _i168.AuthSharedDataSource());
-    gh.singleton<_i969.AuthRemoteDataSource>(
-        () => _i781.AuthApiRemoteDataSource());
-    gh.singleton<_i1048.AuthRepository>(() => _i1048.AuthRepository(
-          gh<_i969.AuthRemoteDataSource>(),
-          gh<_i60.AuthLocalDataSource>(),
+    gh.singleton<Dio>(() {
+      return Dio(BaseOptions(
+        baseUrl: ApiConstants.baseUrl,
+        receiveDataWhenStatusError: true,
+      ));
+    });
+    gh.singleton<AuthRemoteDataSource>(
+        () => AuthApiRemoteDataSource(gh<Dio>()));
+    gh.singleton<AuthLocalDataSource>(
+        () => AuthSharedDataSource(gh<SharedPreferences>()));
+    gh.singleton<AuthRepository>(() => AuthRepository(
+          gh<AuthRemoteDataSource>(),
+          gh<AuthLocalDataSource>(),
         ));
+    gh.singleton<AuthCubit>(
+        () => AuthCubit(gh<AuthRepository>()));
     return this;
   }
 }

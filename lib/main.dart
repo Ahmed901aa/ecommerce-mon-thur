@@ -1,3 +1,4 @@
+import 'package:ecommerce/core/app_bloc_abserver.dart';
 import 'package:ecommerce/core/di/service_loacator.dart';
 import 'package:ecommerce/core/routes/route_generator.dart';
 import 'package:ecommerce/core/routes/routes.dart';
@@ -7,7 +8,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 Future<void> main() async {
-  configureDependencies();
+  WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = AppBlocAbserver();
+  await configureDependencies();
+  
   runApp(const ECommerceApp());
 }
 
@@ -17,7 +21,7 @@ class ECommerceApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => AuthCubit(),
+      create: (_) => serviceLocator.get<AuthCubit>(),
       child: ScreenUtilInit(
         designSize: const Size(430, 932),
         minTextAdapt: true,
