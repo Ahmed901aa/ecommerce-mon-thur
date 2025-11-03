@@ -6,7 +6,9 @@ import 'package:ecommerce/features/auth/screens/data/models/login_requst.dart';
 import 'package:ecommerce/features/auth/screens/data/models/login_respone.dart';
 import 'package:ecommerce/features/auth/screens/data/models/register_requst.dart';
 import 'package:ecommerce/features/auth/screens/data/models/register_response.dart';
+import 'package:injectable/injectable.dart';
 
+@Singleton(as: AuthRemoteDataSource)
 class AuthApiRemoteDataSource extends AuthRemoteDataSource {
   AuthApiRemoteDataSource()
       : _dio = Dio(

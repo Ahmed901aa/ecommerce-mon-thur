@@ -22,8 +22,6 @@ class Validator {
       return 'this field is required';
     } else if (val.isEmpty) {
       return 'this field is required';
-    } else if (val.length < 8 ) {
-      return 'strong password please';
     } else {
       return null;
     }

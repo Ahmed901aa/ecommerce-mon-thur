@@ -23,9 +23,15 @@ dependencies:
   dio: ^5.9.0
   shared_preferences: ^2.5.3
   flutter_bloc: ^9.1.1
+  dartz: ^0.10.1
+  fluttertoast: ^9.0.0
+  get_it: ^8.3.0
+  injectable: ^2.5.2
+  injectable_generator: ^2.9.0
 
 dev_dependencies:
   flutter_lints: ^4.0.0
+  build_runner: ^2.10.1
 
 flutter:
   generate: true

@@ -4,7 +4,10 @@ import 'package:ecommerce/core/resources/font_manager.dart';
 import 'package:ecommerce/core/resources/styles_manager.dart';
 import 'package:ecommerce/core/resources/values_manager.dart';
 import 'package:ecommerce/core/routes/routes.dart';
+import 'dart:async';
+
 import 'package:ecommerce/core/utils/ui_utils.dart';
+import 'package:ecommerce/core/utils/credentials_storage.dart';
 import 'package:ecommerce/core/utils/validator.dart';
 import 'package:ecommerce/core/widgets/custom_elevated_button.dart';
 import 'package:ecommerce/core/widgets/custom_text_field.dart';
@@ -27,6 +30,42 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final formkey = GlobalKey<FormState>();
+  String? _authError;
+  Timer? _errorTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSavedCredentials();
+  }
+
+  Future<void> _loadSavedCredentials() async {
+    final creds = await CredentialsStorage.getSavedCredentials();
+    if (creds != null) {
+      _emailController.text = creds['email']!;
+      _passwordController.text = creds['password']!;
+    }
+  }
+
+  void _setAuthError(String? message) {
+    _errorTimer?.cancel();
+    if (message == null) {
+      setState(() => _authError = null);
+      return;
+    }
+    setState(() => _authError = message);
+    _errorTimer = Timer(const Duration(seconds: 10), () {
+      if (mounted) setState(() => _authError = null);
+    });
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _errorTimer?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,12 +145,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         listener: (context, state) {
                           if (state is LoginLoading) {
                             UiUtils.showLoading(context);
+                            _setAuthError(null);
                           } else if (state is LoginSuccess) {
                             UiUtils.hideLoading(context);
+                            _setAuthError(null);
+                            CredentialsStorage.saveCredentials(
+                              _emailController.text,
+                              _passwordController.text,
+                            );
                             Navigator.of(context).pushReplacementNamed(Routes.home);
                           } else if (state is LoginFailure) {
                             UiUtils.hideLoading(context);
-                            UiUtils.showSnackBar(context, state.message ?? 'Login failed');
+                            _setAuthError(state.message);
                           }
                         },
                         child: CustomElevatedButton(
@@ -161,6 +206,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ],
                   ),
+                  SizedBox(height: 10.h),
+                  if (_authError != null)
+                    Center(
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 8.h),
+                        decoration: BoxDecoration(
+                          color: Colors.black87,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          _authError!,
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),
