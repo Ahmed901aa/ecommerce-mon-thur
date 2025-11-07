@@ -9,7 +9,7 @@ abstract class RegisterModule {
   Dio get dio => Dio(BaseOptions(
         baseUrl: ApiConstants.baseUrl,
         receiveDataWhenStatusError: true,
-      ));
+      ),);
 
   @preResolve
   Future<SharedPreferences> getsheredpref() => SharedPreferences.getInstance();

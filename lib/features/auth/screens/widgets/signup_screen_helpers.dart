@@ -98,14 +98,14 @@ extension _SignUpScreenHelpers on _RegisterScreenState {
         children: [
           Text('Do you have an account?',
               style: getSemiBoldStyle(color: ColorManager.white)
-                  .copyWith(fontSize: FontSize.s16)),
+                  .copyWith(fontSize: FontSize.s16),),
           SizedBox(width: Sizes.s8.w),
           GestureDetector(
             onTap: () =>
                 Navigator.of(context).pushReplacementNamed(Routes.login),
             child: Text('Sign In',
                 style: getSemiBoldStyle(color: ColorManager.white)
-                    .copyWith(fontSize: FontSize.s16)),
+                    .copyWith(fontSize: FontSize.s16),),
           ),
         ],
       );

@@ -13,7 +13,7 @@ import 'package:ecommerce/core/widgets/custom_elevated_button.dart';
 import 'package:ecommerce/core/widgets/custom_text_field.dart';
 import 'package:ecommerce/features/auth/presentation/auth_cubit.dart';
 import 'package:ecommerce/features/auth/presentation/auth_state.dart';
-import 'package:ecommerce/features/auth/screens/data/models/register_requst.dart';
+import 'package:ecommerce/features/auth/screens/data/models/register_request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

@@ -2,14 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:ecommerce/core/constant.dart';
 import 'package:ecommerce/core/errors/api_exception.dart';
 import 'package:ecommerce/features/auth/screens/data/data_source/remote/auth_remote_data_source.dart';
-import 'package:ecommerce/features/auth/screens/data/models/login_request.dart';
-import 'package:ecommerce/features/auth/screens/data/models/login_response.dart';
-import 'package:ecommerce/features/auth/screens/data/models/register_request.dart';
+import 'package:ecommerce/features/auth/screens/data/models/login_requst.dart';
+import 'package:ecommerce/features/auth/screens/data/models/login_respone.dart';
+import 'package:ecommerce/features/auth/screens/data/models/register_requst.dart';
 import 'package:ecommerce/features/auth/screens/data/models/register_response.dart';
 import 'package:injectable/injectable.dart';
 
 @Singleton(as: AuthRemoteDataSource)
-class AuthApiRemoteDataSource extends AuthRemoteDataSource {
+class AuthApiRemoteDataSource implements AuthRemoteDataSource {
   final Dio _dio;
 
   AuthApiRemoteDataSource(this._dio);

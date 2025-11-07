@@ -1,7 +1,7 @@
+import 'package:ecommerce/features/auth/domain/repositries/auth_repositires.dart';
 import 'package:ecommerce/features/auth/presentation/auth_state.dart';
-import 'package:ecommerce/features/auth/screens/data/models/login_requst.dart';
-import 'package:ecommerce/features/auth/screens/data/models/register_requst.dart';
-import 'package:ecommerce/features/auth/screens/data/repositories/auth_repository.dart';
+import 'package:ecommerce/features/auth/screens/data/models/login_request.dart';
+import 'package:ecommerce/features/auth/screens/data/models/register_request.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 

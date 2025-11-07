@@ -1,5 +1,5 @@
 import 'package:ecommerce/core/routes/routes.dart';
-import 'package:ecommerce/features/auth/screens/sgin_in_screen.dart';
+import 'package:ecommerce/features/auth/screens/sign_in_screen.dart';
 import 'package:ecommerce/features/auth/screens/sign_up_screen.dart';
 import 'package:ecommerce/features/cart/screens/cart_screen.dart';
 import 'package:ecommerce/features/home/presentation/screens/home_screen.dart';

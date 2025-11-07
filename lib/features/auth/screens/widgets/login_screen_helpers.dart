@@ -1,4 +1,4 @@
-part of '../sgin_in_screen.dart';
+part of '../sign_in_screen.dart';
 
 extension _LoginScreenHelpers on _LoginScreenState {
   List<Widget> buildContent(BuildContext context) => [
@@ -7,10 +7,10 @@ extension _LoginScreenHelpers on _LoginScreenState {
         SizedBox(height: Sizes.s40.h),
         Text('Welcome Back To Route',
             style: getBoldStyle(color: ColorManager.white)
-                .copyWith(fontSize: FontSize.s24)),
+                .copyWith(fontSize: FontSize.s24),),
         Text('Please sign in with your mail',
             style: getLightStyle(color: ColorManager.white)
-                .copyWith(fontSize: FontSize.s16)),
+                .copyWith(fontSize: FontSize.s16),),
         SizedBox(height: Sizes.s50.h),
         CustomTextField(
           backgroundColor: ColorManager.white,
@@ -38,7 +38,7 @@ extension _LoginScreenHelpers on _LoginScreenState {
               onTap: () {},
               child: Text('Forget password?',
                   style: getMediumStyle(color: ColorManager.white)
-                      .copyWith(fontSize: FontSize.s18)),
+                      .copyWith(fontSize: FontSize.s18),),
             ),
           ],
         ),
@@ -93,14 +93,14 @@ extension _LoginScreenHelpers on _LoginScreenState {
         children: [
           Text("Don't have an account?",
               style: getSemiBoldStyle(color: ColorManager.white)
-                  .copyWith(fontSize: FontSize.s16)),
+                  .copyWith(fontSize: FontSize.s16),),
           SizedBox(width: Sizes.s8.w),
           GestureDetector(
             onTap: () =>
                 Navigator.of(context).pushReplacementNamed(Routes.register),
             child: Text('Create Account',
                 style: getSemiBoldStyle(color: ColorManager.white)
-                    .copyWith(fontSize: FontSize.s16)),
+                    .copyWith(fontSize: FontSize.s16),),
           ),
         ],
       );
