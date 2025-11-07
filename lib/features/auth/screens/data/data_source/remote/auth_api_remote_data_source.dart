@@ -26,9 +26,15 @@ class AuthApiRemoteDataSource extends AuthRemoteDataSource {
     } catch (exception) {
       String? massage;
       if (exception is DioException) {
-        massage = exception.response!.data['message'];
+        final resp = exception.response;
+        if (resp != null && resp.data is Map && resp.data['message'] != null) {
+          massage = resp.data['message'] as String;
+        } else {
+          massage = resp?.statusMessage ?? exception.toString();
+        }
       }
-      throw RemoteExcption(massage ?? ' Failed to register');
+
+      throw ApiException(massage ?? 'Failed to login');
     }
   }
 
@@ -44,10 +50,15 @@ class AuthApiRemoteDataSource extends AuthRemoteDataSource {
     } catch (exception) {
       String? massage;
       if (exception is DioException) {
-        massage = exception.response!.data['message'];
+        final resp = exception.response;
+        if (resp != null && resp.data is Map && resp.data['message'] != null) {
+          massage = resp.data['message'] as String;
+        } else {
+          massage = resp?.statusMessage ?? exception.toString();
+        }
       }
 
-      throw ApiException(massage ?? ' Failed to login');
+      throw ApiException(massage ?? 'Failed to register');
     }
   }
 }

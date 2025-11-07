@@ -13,9 +13,9 @@ class LoginResponse {
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
     return LoginResponse(
-      message: json['message'] as String,
+      message: json['message'] as String? ?? 'success',
       user: UserModel.fromJson(json['user'] as Map<String, dynamic>),
-      token: json['token'],
+      token: (json['token'] as String?) ?? '',
     );
   }
 }
