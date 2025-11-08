@@ -65,8 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
-  Widget build(BuildContext context) =>
-      Scaffold(
+  Widget build(BuildContext context) => Scaffold(
         backgroundColor: ColorManager.primary,
         body: SafeArea(
           child: Padding(

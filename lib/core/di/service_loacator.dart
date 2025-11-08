@@ -10,6 +10,5 @@ final GetIt serviceLocator = GetIt.instance;
   asExtension: false,
 )
 Future<void> configureDependencies() async {
- 
   await init(serviceLocator);
 }

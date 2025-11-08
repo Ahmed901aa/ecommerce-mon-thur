@@ -10,8 +10,8 @@ import 'package:ecommerce/features/auth/screens/data/models/login_request.dart';
 import 'package:ecommerce/features/auth/screens/data/models/register_request.dart';
 import 'package:injectable/injectable.dart';
 
-@Singleton(as: AuthRepository )
-class AuthRepositoryImpl implements AuthRepository{
+@Singleton(as: AuthRepository)
+class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource _remoteDataSource;
   final AuthLocalDataSource _localDataSource;
 

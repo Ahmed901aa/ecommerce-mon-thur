@@ -96,16 +96,20 @@ extension _SignUpScreenHelpers on _RegisterScreenState {
   Widget buildSignInPrompt(BuildContext context) => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Do you have an account?',
-              style: getSemiBoldStyle(color: ColorManager.white)
-                  .copyWith(fontSize: FontSize.s16),),
+          Text(
+            'Do you have an account?',
+            style: getSemiBoldStyle(color: ColorManager.white)
+                .copyWith(fontSize: FontSize.s16),
+          ),
           SizedBox(width: Sizes.s8.w),
           GestureDetector(
             onTap: () =>
                 Navigator.of(context).pushReplacementNamed(Routes.login),
-            child: Text('Sign In',
-                style: getSemiBoldStyle(color: ColorManager.white)
-                    .copyWith(fontSize: FontSize.s16),),
+            child: Text(
+              'Sign In',
+              style: getSemiBoldStyle(color: ColorManager.white)
+                  .copyWith(fontSize: FontSize.s16),
+            ),
           ),
         ],
       );

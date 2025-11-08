@@ -7,12 +7,10 @@ import 'package:injectable/injectable.dart';
 
 @singleton
 class RegisterUseCases {
-
   final AuthRepository _authRepository;
 
   RegisterUseCases(this._authRepository);
 
- Future<Either<Failure, User>>  call(RegisterRequest request) => 
- _authRepository.register(request);
-
+  Future<Either<Failure, User>> call(RegisterRequest request) =>
+      _authRepository.register(request);
 }

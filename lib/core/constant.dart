@@ -2,6 +2,7 @@ class ApiConstants {
   static const String baseUrl = 'https://ecommerce.routemisr.com/api/v1/';
   static const String loginEndpoint = 'auth/Signin';
   static const String registerEndpoint = 'auth/Signup';
+  static const String categoriesEndpoint = 'categories';
 }
 
 class CachConstants {

@@ -5,12 +5,16 @@ extension _LoginScreenHelpers on _LoginScreenState {
         SizedBox(height: Sizes.s40.h),
         Center(child: SvgPicture.asset(SvgAssets.route)),
         SizedBox(height: Sizes.s40.h),
-        Text('Welcome Back To Route',
-            style: getBoldStyle(color: ColorManager.white)
-                .copyWith(fontSize: FontSize.s24),),
-        Text('Please sign in with your mail',
-            style: getLightStyle(color: ColorManager.white)
-                .copyWith(fontSize: FontSize.s16),),
+        Text(
+          'Welcome Back To Route',
+          style: getBoldStyle(color: ColorManager.white)
+              .copyWith(fontSize: FontSize.s24),
+        ),
+        Text(
+          'Please sign in with your mail',
+          style: getLightStyle(color: ColorManager.white)
+              .copyWith(fontSize: FontSize.s16),
+        ),
         SizedBox(height: Sizes.s50.h),
         CustomTextField(
           backgroundColor: ColorManager.white,
@@ -36,9 +40,11 @@ extension _LoginScreenHelpers on _LoginScreenState {
             const Spacer(),
             GestureDetector(
               onTap: () {},
-              child: Text('Forget password?',
-                  style: getMediumStyle(color: ColorManager.white)
-                      .copyWith(fontSize: FontSize.s18),),
+              child: Text(
+                'Forget password?',
+                style: getMediumStyle(color: ColorManager.white)
+                    .copyWith(fontSize: FontSize.s18),
+              ),
             ),
           ],
         ),
@@ -91,16 +97,20 @@ extension _LoginScreenHelpers on _LoginScreenState {
   Widget buildSignUpPrompt(BuildContext context) => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text("Don't have an account?",
-              style: getSemiBoldStyle(color: ColorManager.white)
-                  .copyWith(fontSize: FontSize.s16),),
+          Text(
+            "Don't have an account?",
+            style: getSemiBoldStyle(color: ColorManager.white)
+                .copyWith(fontSize: FontSize.s16),
+          ),
           SizedBox(width: Sizes.s8.w),
           GestureDetector(
             onTap: () =>
                 Navigator.of(context).pushReplacementNamed(Routes.register),
-            child: Text('Create Account',
-                style: getSemiBoldStyle(color: ColorManager.white)
-                    .copyWith(fontSize: FontSize.s16),),
+            child: Text(
+              'Create Account',
+              style: getSemiBoldStyle(color: ColorManager.white)
+                  .copyWith(fontSize: FontSize.s16),
+            ),
           ),
         ],
       );

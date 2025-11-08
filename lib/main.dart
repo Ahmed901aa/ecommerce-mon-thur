@@ -11,7 +11,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = AppBlocAbserver();
   await configureDependencies();
-  
+
   runApp(const ECommerceApp());
 }
 
@@ -29,7 +29,7 @@ class ECommerceApp extends StatelessWidget {
         builder: (_, child) => const MaterialApp(
           debugShowCheckedModeBanner: false,
           onGenerateRoute: RouteGenerator.getRoute,
-          initialRoute: Routes.login,
+          initialRoute: Routes.home,
         ),
       ),
     );

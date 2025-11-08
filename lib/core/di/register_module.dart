@@ -6,10 +6,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 @module
 abstract class RegisterModule {
   @singleton
-  Dio get dio => Dio(BaseOptions(
-        baseUrl: ApiConstants.baseUrl,
-        receiveDataWhenStatusError: true,
-      ),);
+  Dio get dio => Dio(
+        BaseOptions(
+          baseUrl: ApiConstants.baseUrl,
+          receiveDataWhenStatusError: true,
+        ),
+      );
 
   @preResolve
   Future<SharedPreferences> getsheredpref() => SharedPreferences.getInstance();

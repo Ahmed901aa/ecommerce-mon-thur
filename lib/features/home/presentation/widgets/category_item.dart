@@ -1,11 +1,14 @@
-import 'package:ecommerce/core/resources/assets_manager.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce/core/resources/color_manager.dart';
 import 'package:ecommerce/core/resources/styles_manager.dart';
+import 'package:ecommerce/features/home/data/domain/entities/entities_category.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CategoryItem extends StatelessWidget {
-  const CategoryItem();
+  const CategoryItem(this.category);
+
+  final EntitiesCategory category;
 
   @override
   Widget build(BuildContext context) {
@@ -19,15 +22,12 @@ class CategoryItem extends StatelessWidget {
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
             ),
-            child: Image.asset(
-              ImageAssets.categoryHomeImage,
-              fit: BoxFit.cover,
-            ),
+            child: CachedNetworkImage(imageUrl: category.image,fit: BoxFit.cover,)
           ),
         ),
         SizedBox(height: 8.h),
         Text(
-          "men's fashion",
+          category.name,
           style: getRegularStyle(color: ColorManager.darkBlue, fontSize: 14.sp),
         ),
       ],

@@ -1,4 +1,3 @@
-
 import 'package:ecommerce/features/auth/domain/use_cases/login_use_cases.dart';
 import 'package:ecommerce/features/auth/domain/use_cases/register_use_cases.dart';
 import 'package:ecommerce/features/auth/presentation/auth_state.dart';
@@ -9,12 +8,7 @@ import 'package:injectable/injectable.dart';
 
 @singleton
 class AuthCubit extends Cubit<AuthState> {
-   
-  AuthCubit(
-    this._loginUseCases, 
-    this._registerUseCases
-
-  ) : super(AuthInitial());
+  AuthCubit(this._loginUseCases, this._registerUseCases) : super(AuthInitial());
 
   final LoginUseCases _loginUseCases;
 

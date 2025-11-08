@@ -22,7 +22,4 @@ class UserModel {
       role: json['role'] as String? ?? '',
     );
   }
-
-  
 }
-
