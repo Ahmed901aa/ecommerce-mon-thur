@@ -33,7 +33,7 @@ class _HomeTabState extends State<HomeTab> {
   void initState() {
     super.initState();
     _startImageSwitching();
-    _homeCubit =serviceLocator.get<HomeCubit>()..getCategories();
+    _homeCubit =serviceLocator.get<HomeCubit>();
   }
 
   @override

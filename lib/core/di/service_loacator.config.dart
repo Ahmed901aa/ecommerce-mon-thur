@@ -30,6 +30,8 @@ import '../../features/auth/screens/data/repositories/auth_repository_impl.dart'
     as _i643;
 import '../../features/home/data/data_sources/home_api_remote_data_source.dart'
     as _i678;
+import '../../features/home/data/data_sources/home_remote_data_source.dart'
+    as _i350;
 import '../../features/home/data/domain/repository/home_repository_Impl.dart'
     as _i388;
 import '../../features/home/data/domain/use_cases/get_categories.dart' as _i892;
@@ -54,18 +56,18 @@ Future<_i174.GetIt> init(
     preResolve: true,
   );
   gh.singleton<_i361.Dio>(() => registerModule.dio);
+  gh.lazySingleton<_i350.HomeRemoteDataSource>(
+      () => _i678.HomeApiRemoteDataSource(gh<_i361.Dio>()));
+  gh.singleton<_i390.AuthRemoteDataSource>(
+      () => _i632.AuthApiRemoteDataSource(gh<_i361.Dio>()));
   gh.lazySingleton<_i1047.HomeRepository>(
-      () => _i388.HomeRepositoryImpl(gh<InvalidType>()));
+      () => _i388.HomeRepositoryImpl(gh<_i350.HomeRemoteDataSource>()));
+  gh.singleton<_i841.AuthLocalDataSource>(
+      () => _i490.AuthSharedDataSource(gh<_i460.SharedPreferences>()));
   gh.lazySingleton<_i892.GetCategories>(
       () => _i892.GetCategories(gh<_i1047.HomeRepository>()));
   gh.lazySingleton<_i9.HomeCubit>(
       () => _i9.HomeCubit(gh<_i892.GetCategories>()));
-  gh.singleton<_i390.AuthRemoteDataSource>(
-      () => _i632.AuthApiRemoteDataSource(gh<_i361.Dio>()));
-  gh.lazySingleton<_i678.HomeApiRemoteDataSource>(
-      () => _i678.HomeApiRemoteDataSource(gh<_i361.Dio>()));
-  gh.singleton<_i841.AuthLocalDataSource>(
-      () => _i490.AuthSharedDataSource(gh<_i460.SharedPreferences>()));
   gh.singleton<_i927.AuthRepository>(() => _i643.AuthRepositoryImpl(
         gh<_i390.AuthRemoteDataSource>(),
         gh<_i841.AuthLocalDataSource>(),

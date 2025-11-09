@@ -6,7 +6,10 @@ import 'package:injectable/injectable.dart';
 @lazySingleton
 class HomeCubit extends Cubit<HomeStateCubit> {
 
-  HomeCubit(this._getCategories) :super(HomeInitial()); 
+  HomeCubit(this._getCategories) :
+  super(HomeInitial()){
+     getCategories();
+  } 
 
   final GetCategories _getCategories;
 
