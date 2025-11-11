@@ -33,7 +33,7 @@ class _HomeTabState extends State<HomeTab> {
   void initState() {
     super.initState();
     _startImageSwitching();
-    _homeCubit =serviceLocator.get<HomeCubit>();
+    _homeCubit = serviceLocator.get<HomeCubit>();
   }
 
   @override
@@ -79,17 +79,16 @@ class _HomeTabState extends State<HomeTab> {
                           itemCount: state.categories.length,
                           scrollDirection: Axis.horizontal,
                         );
-                      } else{
+                      } else {
                         return const SizedBox.shrink();
                       }
-                      
                     },
                   ),
                 ),
               ),
               SizedBox(height: 12.h),
             ],
-          ),  
+          ),
         ],
       ),
     );

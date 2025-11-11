@@ -8,9 +8,8 @@ import 'package:ecommerce/features/home/data/mappers/category_mappers.dart';
 import 'package:ecommerce/features/home/data/repository/home_repository.dart';
 import 'package:injectable/injectable.dart';
 
-@LazySingleton(as: HomeRepository )
+@LazySingleton(as: HomeRepository)
 class HomeRepositoryImpl implements HomeRepository {
-
   final HomeRemoteDataSource _remoteDataSource;
 
   HomeRepositoryImpl(this._remoteDataSource);
@@ -20,10 +19,12 @@ class HomeRepositoryImpl implements HomeRepository {
     try {
       final response = await _remoteDataSource.getCategories();
       return Right(
-        response.categories.map((categorieModel) => categorieModel.entites).toList(),
+        response.categories
+            .map((categorieModel) => categorieModel.entites)
+            .toList(),
       );
     } on RemoteExcption catch (exception) {
       return Left(Failure(massage: exception.message));
     }
   }
-} 
+}

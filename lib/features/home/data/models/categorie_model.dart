@@ -20,9 +20,7 @@ class CategorieModel {
         name: json['name'] as String,
         slug: json['slug'] as String,
         image: json['image'] as String,
-        createdAt:  DateTime.parse(json['createdAt'] as String),
-        updatedAt : DateTime.parse(json['updatedAt'] as String),
+        createdAt: DateTime.parse(json['createdAt'] as String),
+        updatedAt: DateTime.parse(json['updatedAt'] as String),
       );
-
-  
 }

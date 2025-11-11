@@ -5,22 +5,18 @@ import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class HomeCubit extends Cubit<HomeStateCubit> {
-
-  HomeCubit(this._getCategories) :
-  super(HomeInitial()){
-     getCategories();
-  } 
+  HomeCubit(this._getCategories) : super(HomeInitial()) {
+    getCategories();
+  }
 
   final GetCategories _getCategories;
 
-  Future<void> getCategories()async{
+  Future<void> getCategories() async {
     emit(GetCategoriesLoading());
 
-  final result = await  _getCategories();
+    final result = await _getCategories();
 
-  result.fold(
-    (failure) => emit(GetCategoriesFailure(failure.massage)), 
-    (categories) => emit(GetCategoriesSucess(categories)));
+    result.fold((failure) => emit(GetCategoriesFailure(failure.massage)),
+        (categories) => emit(GetCategoriesSucess(categories)));
   }
-
 }

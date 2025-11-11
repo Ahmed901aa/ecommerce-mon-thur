@@ -3,11 +3,10 @@ class Metadata {
   final int numberOfPages;
   final int limit;
 
-  const Metadata({
-    required this.currentPage,
-    required this.numberOfPages,
-    required this.limit
-       });
+  const Metadata(
+      {required this.currentPage,
+      required this.numberOfPages,
+      required this.limit});
 
   factory Metadata.fromJson(Map<String, dynamic> json) => Metadata(
         currentPage: json['currentPage'] as int,

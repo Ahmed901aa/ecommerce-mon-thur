@@ -9,20 +9,18 @@ import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: HomeRemoteDataSource)
 class HomeApiRemoteDataSource implements HomeRemoteDataSource {
-
   final Dio _dio;
 
   HomeApiRemoteDataSource(this._dio);
 
   @override
-  Future<CategoriesRespoines> getCategories() async{
-
-     try{
+  Future<CategoriesRespoines> getCategories() async {
+    try {
       final response = await _dio.get(ApiConstants.categoriesEndpoint);
       return CategoriesRespoines.fromJson(response.data);
-    } catch(exception){
+    } catch (exception) {
       String? message;
-      if(exception is DioException){
+      if (exception is DioException) {
         message = exception.response?.data['message'];
       }
       throw RemoteExcption(message ?? 'Failed to get categories');

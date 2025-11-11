@@ -16,35 +16,29 @@ class ProductsScreen extends StatelessWidget {
       appBar: const HomeScreenAppBar(
         automaticallyImplyLeading: true,
       ),
-      body: Padding(
-        padding: EdgeInsets.all(Insets.s16.sp),
-        child: Column(
-          children: [
-            Expanded(
-              child: GridView.builder(
-                itemCount: 20,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 8,
-                  mainAxisSpacing: 8,
-                  childAspectRatio: 7 / 9,
-                ),
-                itemBuilder: (_, __) => ProductItem(
-                  image: ImageAssets.categoryHomeImage,
-                  title: 'Nike Air Jordon',
-                  price: 1100,
-                  rating: 4.7,
-                  discountPercentage: 10,
-                  height: screenSize.height,
-                  width: screenSize.width,
-                  description:
-                      'Nike is a multinational corporation that designs, develops, and sells athletic footwear ,apparel, and accessories',
-                ),
-                scrollDirection: Axis.vertical,
-              ),
-            ),
-          ],
+      body: GridView.builder(
+        
+       
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 8,
+          mainAxisSpacing: 8,
+          childAspectRatio: 7 / 9,
         ),
+        itemBuilder: (_, __) => ProductItem(
+          image: ImageAssets.categoryHomeImage,
+          title: 'Nike Air Jordon',
+          price: 1100,
+          rating: 4.7,
+          discountPercentage: 10,
+          height: screenSize.height,
+          width: screenSize.width,
+          description:
+              'Nike is a multinational corporation that designs, develops, and sells athletic footwear ,apparel, and accessories',
+        ),
+         itemCount: 20,
+         padding: EdgeInsets.all(Insets.s16.sp), 
+      //  scrollDirection: Axis.vertical,
       ),
     );
   }

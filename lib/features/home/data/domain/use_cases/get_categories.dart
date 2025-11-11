@@ -6,11 +6,10 @@ import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class GetCategories {
-
   final HomeRepository _homeRepository;
 
   GetCategories(this._homeRepository);
 
- Future<Either<Failure, List<EntitiesCategory>>> call() => 
- _homeRepository.getCategories();
+  Future<Either<Failure, List<EntitiesCategory>>> call() =>
+      _homeRepository.getCategories();
 }
